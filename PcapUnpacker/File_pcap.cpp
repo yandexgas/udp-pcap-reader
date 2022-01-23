@@ -78,6 +78,11 @@ std::optional<Packet> File_pcap_reader::getNextPacket()
             << "Error while reading packet with number" << readed_count_ << std::endl;
         return std::nullopt;
     }
+    catch (const char* e) {
+        std::cerr<< e << std::endl
+                 << "Error while reading packet with number" << readed_count_ << std::endl;
+        return std::nullopt;
+    }
 }
 
 /// <summary>
