@@ -3,7 +3,6 @@
 #include "Headers.h"
 #include <string>
 #include <cstring>
-#include <optional>
 
 /// <summary>
 /// Класс описывающий пакет, считанный из .pcap файла

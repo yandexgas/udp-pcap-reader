@@ -112,7 +112,7 @@ bool checkMyFile(std::vector<Packet>& original_data, const char* filename)
 }
 
 void showPacketsData(std::vector<Packet>& original_data) {
-    std::cout << "Input EOF if you don't want to see packet data, else input enter, to see next 15 peckets." << std::endl;
+    std::cout << "Input EOF if you don't want to see packet data, else input enter, to see next 15 packets." << std::endl;
     auto current_packete = original_data.cbegin();
     char buf[16];
     std::cin.getline(buf, 16);
