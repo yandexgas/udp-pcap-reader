@@ -12,9 +12,9 @@ inline void swap_endian(std::uint16_t& i) { i = (i << 8) | (i >> 8); } // для дв
 
 ethernet_header::ethernet_header(char* byteArray)
 {
-    std::memcpy(destination_host, byteArray, sizeof destination_host);
-    std::memcpy(source_host, byteArray + SOURCE_HOST_HEADER_OFSET, sizeof source_host);
-    std::memcpy(&protocol_type, byteArray + PROTOCOL_TYPE_HEADER_OFSET, sizeof protocol_type);
+    std::memcpy(destination_host, byteArray, sizeof(destination_host));
+    std::memcpy(source_host, byteArray + SOURCE_HOST_HEADER_OFSET, sizeof (source_host));
+    std::memcpy(&protocol_type, byteArray + PROTOCOL_TYPE_HEADER_OFSET, sizeof (protocol_type));
     if (protocol_type != 8)
         throw ("Only IPv4 supported. Can't read this packet.");
 }
@@ -62,9 +62,9 @@ IPv4_header::IPv4_header(char* byteArray)
     DSCP = (second_byte & top6_bits_mask) >> 6;
     ECN = second_byte & low2_bits_mask;
 
-    std::memcpy(&packetSize, byteArray + PACKET_SIZE_HEADER_OFSET, sizeof packetSize);
+    std::memcpy(&packetSize, byteArray + PACKET_SIZE_HEADER_OFSET, sizeof (packetSize));
     swap_endian(packetSize);
-    std::memcpy(&id, byteArray + ID_HEADER_OFSET, sizeof id);
+    std::memcpy(&id, byteArray + ID_HEADER_OFSET, sizeof (id));
     swap_endian(id);
 
     std::uint8_t sixth_bite;
@@ -74,15 +74,15 @@ IPv4_header::IPv4_header(char* byteArray)
     flags = (sixth_bite & top3_bits_mask) >> 5;
     fragment_ofset = sixth_bite & low5_bits_mask;
 
-    std::memcpy(&time_to_life, byteArray + LIFETIME_HEADER_OFSET, sizeof time_to_life);
-    std::memcpy(&protocol_type, byteArray + PROTOCOL_TYPE_HEADER_OFSET, sizeof protocol_type);
+    std::memcpy(&time_to_life, byteArray + LIFETIME_HEADER_OFSET, sizeof (time_to_life));
+    std::memcpy(&protocol_type, byteArray + PROTOCOL_TYPE_HEADER_OFSET, sizeof (protocol_type));
     if (protocol_type != 17)
         throw ("Only UDP supported. Can't read this packet.");
 
-    std::memcpy(&checkSum, byteArray + CHECKSUM_HEADER_OFSET, sizeof checkSum);
+    std::memcpy(&checkSum, byteArray + CHECKSUM_HEADER_OFSET, sizeof (checkSum));
     swap_endian(checkSum);
-    std::memcpy(&source_IP_address, byteArray + SOURCE_IP_HEADER_OFSET, sizeof source_IP_address);
-    std::memcpy(&destination_IP_address, byteArray + DESTINATION_IP_HEADER_OFSET, sizeof destination_IP_address);
+    std::memcpy(&source_IP_address, byteArray + SOURCE_IP_HEADER_OFSET, sizeof (source_IP_address));
+    std::memcpy(&destination_IP_address, byteArray + DESTINATION_IP_HEADER_OFSET, sizeof (destination_IP_address));
 
 }
 
@@ -121,16 +121,16 @@ std::string IPv4_header::toString() const noexcept
 
 udp_header::udp_header(char* byteArray)
 {
-    std::memcpy(&source_port, byteArray, sizeof source_port);
+    std::memcpy(&source_port, byteArray, sizeof (source_port));
     swap_endian(source_port);
 
-    std::memcpy(&destination_port, byteArray + DESTINATION_PORT_HEADER_OFSET, sizeof destination_port);
+    std::memcpy(&destination_port, byteArray + DESTINATION_PORT_HEADER_OFSET, sizeof (destination_port));
     swap_endian(destination_port);
 
-    std::memcpy(&datagram_length, byteArray + DATA_LENGTH_HEADER_OFSET, sizeof datagram_length);
+    std::memcpy(&datagram_length, byteArray + DATA_LENGTH_HEADER_OFSET, sizeof (datagram_length));
     swap_endian(datagram_length);
 
-    std::memcpy(&checkSum, byteArray + CHECKSUM_HEADER_OFSET, sizeof checkSum);
+    std::memcpy(&checkSum, byteArray + CHECKSUM_HEADER_OFSET, sizeof(checkSum));
     swap_endian(checkSum);
 }
 
@@ -148,8 +148,8 @@ std::string udp_header::toString() const noexcept
 
 timeStamp::timeStamp(char* byteArray)
 {
-    std::memcpy(&seconds, byteArray, sizeof seconds);
-    std::memcpy(&micro_or_nano_seconds, byteArray + AFTERPOINT_TIME_OFSET, sizeof micro_or_nano_seconds);
+    std::memcpy(&seconds, byteArray, sizeof (seconds));
+    std::memcpy(&micro_or_nano_seconds, byteArray + AFTERPOINT_TIME_OFSET, sizeof(micro_or_nano_seconds));
 }
 
 std::string timeStamp::toString() const noexcept
